@@ -1,8 +1,15 @@
 import React from 'react';
+import './styles/App.css';
+import BookingForm from "./components/BookingForm";
 
-function App() {
+const App:React.FC = () => {
   return (
-    <></>
+      <main>
+          <h1 className={'main-header'}>Забронировать переговорку</h1>
+          <section>
+            <BookingForm />
+          </section>
+      </main>
   );
 }
 
