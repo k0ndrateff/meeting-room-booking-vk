@@ -1,50 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;700');
 
 * {
     margin: 0;
     padding: 0;
-    font-family: 'PT Sans', 'sans-serif';
-    --color-gray: #dedede;
-    --color-white: #ffffff;
-    --color-black: #212121;
     --color-blue: #0077ff;
-    --border-radius: 15px;
+    --color-light-blue: #00eaff;
+    --color-white: #ffffff;
+    font-family: 'Golos Text', 'sans-serif';
+    font-weight: 500;
 }
 
-body {
-    background-color: var(--color-white);
+.main-box {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(245deg, var(--color-blue), var(--color-light-blue));
+    padding-top: 20px;
 }
 
-main {
-    margin: 20px auto auto;
-    width: 50%;
+.inside-box {
+    margin: 0 auto;
+    width: 75%;
 }
 
-.main-header {
-    font-weight: 700;
-    font-size: 3em;
+.inside-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
 }
 
-section {
-    background-color: var(--color-white);
-    width: 100%;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--color-black);
+.box-element {
+    border-radius: 15px;
     padding: 20px;
-    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: var(--color-white);
 }
 
-@media (max-width: 860px) {
-    main {
-        margin: 0;
-        width: 100%;
+.inside-box h1 {
+    color: black;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+@media (max-width: 960px) {
+    .inside-box {
+        width: 90%;
     }
-    section {
-        width: calc(100% - 44px);
-        border: none;
-    }
-    .main-header {
-        font-size: 1.75rem;
-        text-align: center;
+    .inside-box h1 {
+        font-size: 1.5rem;
     }
 }

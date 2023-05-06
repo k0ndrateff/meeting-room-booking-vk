@@ -1,11 +1,10 @@
-.form-parent {
-    display: flex;
-    justify-content: space-around;
-    align-content: flex-start;
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
-.form-block {
-    margin: 5px;
-    padding: 5px;
-    flex: 0 1 auto;
+@media (max-width: 960px) {
+    h2 {
+        font-size: 1.4rem;
+    }
 }

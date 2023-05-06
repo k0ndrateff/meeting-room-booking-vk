@@ -1,19 +1,17 @@
 import React from "react";
-import '../styles/FormElement.css';
+import {FormLabel} from "@chakra-ui/react";
 
 type FormElementProps = {
-    label?: string | null | undefined;
+    label?: string;
     children: React.ReactNode;
 };
 
-const FormElement:React.FC<FormElementProps> = ({children, label}) => {
+const FormElement:React.FC<FormElementProps> = ({label, children}) => {
     return (
-        <>
-            {label && <h2>{label}</h2>}
-            <div className={'form-element'}>
-                {children}
-            </div>
-        </>
+        <div style={{marginBottom: '10px'}}>
+            <FormLabel>{label}</FormLabel>
+            {children}
+        </div>
     );
 };
 export default FormElement;
