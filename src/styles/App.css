@@ -10,11 +10,13 @@
     font-weight: 500;
 }
 
+
 .main-box {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(245deg, var(--color-blue), var(--color-light-blue));
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .inside-box {
