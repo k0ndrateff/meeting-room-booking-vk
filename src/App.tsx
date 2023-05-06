@@ -7,7 +7,7 @@ const App:React.FC = () => {
       <main>
           <h1 className={'main-header'}>Забронировать переговорку</h1>
           <section>
-            <BookingForm />
+              <BookingForm />
           </section>
       </main>
   );

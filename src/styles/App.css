@@ -8,6 +8,7 @@
     --color-white: #ffffff;
     --color-black: #212121;
     --color-blue: #0077ff;
+    --border-radius: 15px;
 }
 
 body {
@@ -16,7 +17,7 @@ body {
 
 main {
     margin: 20px auto auto;
-    width: 75%;
+    width: 50%;
 }
 
 .main-header {
@@ -27,18 +28,23 @@ main {
 section {
     background-color: var(--color-white);
     width: 100%;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     border: 2px solid var(--color-black);
     padding: 20px;
     margin-top: 20px;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 860px) {
     main {
-        width: 100%;
         margin: 0;
+        width: 100%;
+    }
+    section {
+        width: calc(100% - 44px);
+        border: none;
     }
     .main-header {
-        font-size: 1.75em;
+        font-size: 1.75rem;
+        text-align: center;
     }
 }
