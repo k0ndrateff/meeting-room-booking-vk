@@ -8,6 +8,7 @@
     --color-white: #ffffff;
     font-family: 'Golos Text', 'sans-serif';
     font-weight: 500;
+    overflow-x: hidden;
 }
 
 

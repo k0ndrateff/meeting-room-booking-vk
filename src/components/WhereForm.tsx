@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import '../styles/Form.css';
 import {
-    Box,
     Flex,
     NumberDecrementStepper,
     NumberIncrementStepper,
@@ -13,11 +12,20 @@ import FormElement from "./FormElement";
 import TowerCard from "./TowerCard";
 
 type WhereFormProps = {
-
+    setTower: (tower: string) => void;
+    setLevel: (level: number) => void;
+    setMeetingRoom: (meetingRoom: number) => void;
+    level: number;
+    meetingRoom: number;
 };
 
-const WhereForm:React.FC<WhereFormProps> = () => {
+const WhereForm:React.FC<WhereFormProps> = ({setTower, setMeetingRoom, setLevel, level, meetingRoom}) => {
     const [selectedTower, setSelectedTower] = useState('A');
+
+    const toggleTower = (tower: string) => {
+      setSelectedTower(tower);
+      setTower(tower);
+    };
 
     return (
         <>
@@ -25,16 +33,21 @@ const WhereForm:React.FC<WhereFormProps> = () => {
             <Flex flexDirection={'column'} mt={3}>
                 <FormElement label={'Офис'}>
                     <Flex flexDirection={'row'} justifyContent={'space-evenly'}>
-                        <TowerCard tower={'A'} select={setSelectedTower} isSelected={selectedTower === 'A'} mr={4}>
+                        <TowerCard tower={'A'} select={toggleTower} isSelected={selectedTower === 'A'} mr={4}>
                             Башня А
                         </TowerCard>
-                        <TowerCard tower={'B'} select={setSelectedTower} isSelected={selectedTower === 'B'}>
+                        <TowerCard tower={'B'} select={toggleTower} isSelected={selectedTower === 'B'}>
                             Башня Б
                         </TowerCard>
                     </Flex>
                 </FormElement>
                 <FormElement label={'Этаж'}>
-                    <NumberInput defaultValue={3} min={3} max={27}>
+                    <NumberInput defaultValue={3}
+                                 min={3}
+                                 max={27}
+                                 value={level}
+                                 onChange={(valueAsString, valueAsNumber) => setLevel(valueAsNumber)}
+                    >
                         <NumberInputField />
                         <NumberInputStepper>
                             <NumberIncrementStepper />
@@ -43,7 +56,12 @@ const WhereForm:React.FC<WhereFormProps> = () => {
                     </NumberInput>
                 </FormElement>
                 <FormElement label={'Номер переговорки'}>
-                    <NumberInput defaultValue={1} min={1} max={10}>
+                    <NumberInput defaultValue={1}
+                                 min={1}
+                                 max={10}
+                                 value={meetingRoom}
+                                 onChange={(valueAsString, valueAsNumber) => setMeetingRoom(valueAsNumber)}
+                    >
                         <NumberInputField />
                         <NumberInputStepper>
                             <NumberIncrementStepper />
