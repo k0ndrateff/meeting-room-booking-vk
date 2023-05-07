@@ -1,6 +1,6 @@
 {
   "name": "meeting-room-booking",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "private": true,
   "homepage": "https://k0ndrateff.github.io/meeting-room-booking-vk",
   "dependencies": {

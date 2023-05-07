@@ -13,5 +13,3 @@ root.render(
       </ChakraProvider>
   </React.StrictMode>
 );
-
-// TODO: Сменить видимость репозитория на публичную

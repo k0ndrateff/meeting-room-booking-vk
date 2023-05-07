@@ -30,7 +30,6 @@ const WhenForm:React.FC<WhenFormProps> = ({setDate, setStartTime, setEndTime, st
                            max={maxDate}
                            onChange={(event) => setDate(event.target.valueAsDate)}
                     />
-                    {/*TODO: В Safari не работает min и max, нужен полифилл*/}
                 </FormElement>
                 <FormElement>
                     <Flex flexDirection={'row'} alignItems={'center'}>

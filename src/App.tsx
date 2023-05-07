@@ -4,33 +4,55 @@ import { Icon44LogoVk } from "@vkontakte/icons";
 import WhenForm from "./components/WhenForm";
 import WhereForm from "./components/WhereForm";
 import FormElement from "./components/FormElement";
-import {Button, Flex, Textarea} from "@chakra-ui/react";
+import {Button, Flex, Textarea, useToast} from "@chakra-ui/react";
 
 const App:React.FC = () => {
     const [date, setDate] = useState<Date | null>(null);
-    const [startTime, setStartTime] = useState<string | null>('');
-    const [endTime, setEndTime] = useState<string | null>('');
+    const [startTime, setStartTime] = useState<string>('');
+    const [endTime, setEndTime] = useState<string>('');
     const [tower, setTower] = useState<string>('A');
     const [level, setLevel] = useState<number>(3);
     const [meetingRoom, setMeetingRoom] = useState<number>(1);
     const [comment, setComment] = useState<string>('');
 
+    const toast = useToast();
+
+    const validateForm = (): boolean => {
+        return !((startTime >= endTime) || !(startTime && endTime));
+    };
+
+    // Отправка формы
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        // TODO: Валидация
-
-        console.log(JSON.stringify({
-            date: date,
-            startTime: startTime,
-            endTime: endTime,
-            tower: tower,
-            level: level,
-            meetingRoom: meetingRoom,
-            comment: comment
-        }));
+        if (validateForm()) {
+            toast({
+                title: 'Переговорка забронирована!',
+                description: `Ждем вас в переговорке №${meetingRoom} на ${level} этаже башни ${tower === 'A' ? 'А' : 'Б'}.`,
+                status: 'success',
+                duration: 9000
+            });
+            console.log(JSON.stringify({
+                date: date,
+                startTime: startTime,
+                endTime: endTime,
+                tower: tower,
+                level: level,
+                meetingRoom: meetingRoom,
+                comment: comment
+            }));
+        }
+        else {
+            toast({
+                title: 'Забронировать не удалось :(',
+                description: `Вероятно, вы неправильно указали время встречи.`,
+                status: 'error',
+                duration: 6000
+            });
+        }
     };
 
+    // Очистка формы
     const handleClear = () => {
       setStartTime('');
       setEndTime('');
