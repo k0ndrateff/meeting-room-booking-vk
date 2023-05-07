@@ -5,6 +5,7 @@ import WhenForm from "./components/WhenForm";
 import WhereForm from "./components/WhereForm";
 import FormElement from "./components/FormElement";
 import {Button, Flex, Textarea, useToast} from "@chakra-ui/react";
+import {useMinMaxDate} from "./hooks/useMinMaxDate";
 
 const App:React.FC = () => {
     const [date, setDate] = useState<Date | null>(null);
@@ -15,10 +16,14 @@ const App:React.FC = () => {
     const [meetingRoom, setMeetingRoom] = useState<number>(1);
     const [comment, setComment] = useState<string>('');
 
+    const {isDateValid} = useMinMaxDate();
     const toast = useToast();
 
     const validateForm = (): boolean => {
-        return !((startTime >= endTime) || !(startTime && endTime));
+        if ((startTime >= endTime) || !(startTime && endTime)) {
+            return false;
+        }
+        return isDateValid(date as Date);
     };
 
     // Отправка формы
@@ -30,7 +35,8 @@ const App:React.FC = () => {
                 title: 'Переговорка забронирована!',
                 description: `Ждем вас в переговорке №${meetingRoom} на ${level} этаже башни ${tower === 'A' ? 'А' : 'Б'}.`,
                 status: 'success',
-                duration: 9000
+                duration: 6000,
+                isClosable: true
             });
             console.log(JSON.stringify({
                 date: date,
@@ -47,7 +53,8 @@ const App:React.FC = () => {
                 title: 'Забронировать не удалось :(',
                 description: `Вероятно, вы неправильно указали время встречи.`,
                 status: 'error',
-                duration: 6000
+                duration: 4000,
+                isClosable: true
             });
         }
     };
