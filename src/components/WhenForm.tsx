@@ -5,7 +5,7 @@ import FormElement from "./FormElement";
 import {useMinMaxDate} from "../hooks/useMinMaxDate";
 
 type WhenFormProps = {
-    setDate:(date: Date | null) => void;
+    setDate:(date: Date) => void;
     startTime: string | null;
     setStartTime:(time: string) => void;
     endTime: string | null;
@@ -25,7 +25,7 @@ const WhenForm:React.FC<WhenFormProps> = ({setDate, setStartTime, setEndTime, st
                            type={'date'}
                            min={getMinDateString()}
                            max={getMaxDateString()}
-                           onChange={(event) => setDate(event.target.valueAsDate)}
+                           onChange={(event) => setDate(event.target.valueAsDate as Date)}
                     />
                 </FormElement>
                 <FormElement>

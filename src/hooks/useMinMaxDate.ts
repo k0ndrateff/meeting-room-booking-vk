@@ -26,5 +26,5 @@ export const useMinMaxDate = () => {
         else return !(date < minDate || date > maxDate);
     };
 
-    return {getMinDateString, getMaxDateString, isDateValid};
+    return {getMinDateString, getMinDate, getMaxDateString, isDateValid};
 };

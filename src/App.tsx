@@ -8,7 +8,10 @@ import {Button, Flex, Textarea, useToast} from "@chakra-ui/react";
 import {useMinMaxDate} from "./hooks/useMinMaxDate";
 
 const App:React.FC = () => {
-    const [date, setDate] = useState<Date | null>(null);
+    const {getMinDate, isDateValid} = useMinMaxDate();
+    const toast = useToast();
+
+    const [date, setDate] = useState<Date>(getMinDate());
     const [startTime, setStartTime] = useState<string>('');
     const [endTime, setEndTime] = useState<string>('');
     const [tower, setTower] = useState<string>('A');
@@ -16,14 +19,11 @@ const App:React.FC = () => {
     const [meetingRoom, setMeetingRoom] = useState<number>(1);
     const [comment, setComment] = useState<string>('');
 
-    const {isDateValid} = useMinMaxDate();
-    const toast = useToast();
-
     const validateForm = (): boolean => {
         if ((startTime >= endTime) || !(startTime && endTime)) {
             return false;
         }
-        return isDateValid(date as Date);
+        return isDateValid(date);
     };
 
     // Отправка формы
