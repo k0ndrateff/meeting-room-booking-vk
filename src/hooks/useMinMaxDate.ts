@@ -22,7 +22,8 @@ export const useMinMaxDate = () => {
     const isDateValid = (date: Date): boolean => {
         const minDate = getMinDate();
         const maxDate = getMaxDate();
-        return !(date < minDate || date > maxDate);
+        if (date.getDate() === minDate.getDate()) return true; // Корректная обработка сегодняшнего числа
+        else return !(date < minDate || date > maxDate);
     };
 
     return {getMinDateString, getMaxDateString, isDateValid};
