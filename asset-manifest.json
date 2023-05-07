@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/meeting-room-booking-vk/static/css/main.1ee82c53.css",
-    "main.js": "/meeting-room-booking-vk/static/js/main.f7cdab8d.js",
+    "main.js": "/meeting-room-booking-vk/static/js/main.88d0dc21.js",
     "index.html": "/meeting-room-booking-vk/index.html",
     "main.1ee82c53.css.map": "/meeting-room-booking-vk/static/css/main.1ee82c53.css.map",
-    "main.f7cdab8d.js.map": "/meeting-room-booking-vk/static/js/main.f7cdab8d.js.map"
+    "main.88d0dc21.js.map": "/meeting-room-booking-vk/static/js/main.88d0dc21.js.map"
   },
   "entrypoints": [
     "static/css/main.1ee82c53.css",
-    "static/js/main.f7cdab8d.js"
+    "static/js/main.88d0dc21.js"
   ]
 }
