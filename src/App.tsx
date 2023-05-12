@@ -1,29 +1,72 @@
-import React, {useState} from 'react';
+import React, {Reducer, useReducer} from 'react';
 import './styles/App.css';
 import { Icon44LogoVk } from "@vkontakte/icons";
 import WhenForm from "./components/WhenForm";
 import WhereForm from "./components/WhereForm";
-import FormElement from "./components/FormElement";
-import {Button, Flex, Textarea, useToast} from "@chakra-ui/react";
+import {useToast} from "@chakra-ui/react";
 import {useMinMaxDate} from "./hooks/useMinMaxDate";
+import CommentForm from "./components/CommentForm";
+
+export type FormState = {
+    date: Date;
+    startTime: string;
+    endTime: string;
+    tower: string;
+    level: number;
+    meetingRoom: number;
+    comment: string;
+};
+
+export type FormAction = {
+  type: "setDate" | "setStartTime" | "setEndTime" | "setTower" | "setLevel" | "setMeetingRoom" | "setComment" | "clear";
+  payloadDate?: Date;
+  payloadString?: string;
+  payloadNumber?: number;
+};
 
 const App:React.FC = () => {
     const {getMinDate, isDateValid} = useMinMaxDate();
     const toast = useToast();
 
-    const [date, setDate] = useState<Date>(getMinDate());
-    const [startTime, setStartTime] = useState<string>('');
-    const [endTime, setEndTime] = useState<string>('');
-    const [tower, setTower] = useState<string>('A');
-    const [level, setLevel] = useState<number>(3);
-    const [meetingRoom, setMeetingRoom] = useState<number>(1);
-    const [comment, setComment] = useState<string>('');
+    const formInitialState: FormState = {
+        date: getMinDate(),
+        startTime: '',
+        endTime: '',
+        tower: 'A',
+        level: 3,
+        meetingRoom: 1,
+        comment: ''
+    };
+    const formReducer: Reducer<any, any> = (state: FormState, action: FormAction) => {
+        switch (action.type) {
+            case "setDate":
+                return {...state, date: action.payloadDate}
+            case "setStartTime":
+                return {...state, startTime: action.payloadString}
+            case "setEndTime":
+                return {...state, endTime: action.payloadString}
+            case "setTower":
+                return {...state, tower: action.payloadString}
+            case "setLevel":
+                return {...state, level: action.payloadNumber}
+            case "setMeetingRoom":
+                return {...state, meetingRoom: action.payloadNumber}
+            case "setComment":
+                return {...state, comment: action.payloadString}
+            case "clear":
+                return formInitialState;
+            default:
+                return state;
+        }
+    };
+
+    const [formState, formDispatch] = useReducer(formReducer, formInitialState);
 
     const validateForm = (): boolean => {
-        if ((startTime >= endTime) || !(startTime && endTime)) {
+        if ((formState.startTime >= formState.endTime) || !(formState.startTime && formState.endTime)) {
             return false;
         }
-        return isDateValid(date);
+        return isDateValid(formState.date);
     };
 
     // Отправка формы
@@ -33,20 +76,12 @@ const App:React.FC = () => {
         if (validateForm()) {
             toast({
                 title: 'Переговорка забронирована!',
-                description: `Ждем вас в переговорке №${meetingRoom} на ${level} этаже башни ${tower === 'A' ? 'А' : 'Б'}.`,
+                description: `Ждем вас в переговорке №${formState.meetingRoom} на ${formState.level} этаже башни ${formState.tower === 'A' ? 'А' : 'Б'}.`,
                 status: 'success',
                 duration: 6000,
                 isClosable: true
             });
-            console.log(JSON.stringify({
-                date: date,
-                startTime: startTime,
-                endTime: endTime,
-                tower: tower,
-                level: level,
-                meetingRoom: meetingRoom,
-                comment: comment
-            }));
+            console.log(JSON.stringify(formState));
         }
         else {
             toast({
@@ -59,15 +94,6 @@ const App:React.FC = () => {
         }
     };
 
-    // Очистка формы
-    const handleClear = () => {
-      setStartTime('');
-      setEndTime('');
-      setLevel(3);
-      setMeetingRoom(1);
-      setComment('');
-    };
-
     return (
         <div className={'main-box'}>
             <main className={'inside-box'}>
@@ -77,34 +103,13 @@ const App:React.FC = () => {
                 </div>
                 <form onSubmit={(event) => handleSubmit(event)}>
                   <section className={'box-element'}>
-                      <WhenForm setDate={setDate}
-                                setStartTime={setStartTime}
-                                startTime={startTime}
-                                setEndTime={setEndTime}
-                                endTime={endTime}
-                      />
+                      <WhenForm formData={formState} formDispatch={formDispatch} />
                   </section>
                   <section className={'box-element'}>
-                      <WhereForm setTower={setTower}
-                                 setLevel={setLevel}
-                                 level={level}
-                                 setMeetingRoom={setMeetingRoom}
-                                 meetingRoom={meetingRoom}
-                      />
+                      <WhereForm formData={formState} formDispatch={formDispatch} />
                   </section>
                   <section className={'box-element'}>
-                      <h2 style={{marginBottom: '10px'}}>Сущность</h2>
-                      <FormElement label={'Комментарий'}>
-                          <Textarea placeholder='Напишите о целях встречи' onChange={(event) => setComment(event.target.value)} />
-                      </FormElement>
-                      <Flex flexDirection={'row'} justifyContent={'space-between'}>
-                          <Button type={'reset'} colorScheme={'red'} variant={'outline'} onClick={handleClear}>
-                              Очистить
-                          </Button>
-                          <Button type={'submit'} bg={'#0077ff'} color={'#ffffff'} _hover={{backgroundColor: '#00eaff'}}>
-                              Забронировать
-                          </Button>
-                      </Flex>
+                      <CommentForm formDispatch={formDispatch} />
                   </section>
                 </form>
             </main>

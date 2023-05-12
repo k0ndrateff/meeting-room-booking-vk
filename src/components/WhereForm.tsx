@@ -10,21 +10,19 @@ import {
 } from "@chakra-ui/react";
 import FormElement from "./FormElement";
 import TowerCard from "./TowerCard";
+import {FormAction, FormState} from "../App";
 
 type WhereFormProps = {
-    setTower: (tower: string) => void;
-    setLevel: (level: number) => void;
-    setMeetingRoom: (meetingRoom: number) => void;
-    level: number;
-    meetingRoom: number;
+    formData: FormState,
+    formDispatch: (action: FormAction) => void;
 };
 
-const WhereForm:React.FC<WhereFormProps> = ({setTower, setMeetingRoom, setLevel, level, meetingRoom}) => {
+const WhereForm:React.FC<WhereFormProps> = ({formData, formDispatch}) => {
     const [selectedTower, setSelectedTower] = useState('A');
 
     const toggleTower = (tower: string) => {
       setSelectedTower(tower);
-      setTower(tower);
+      formDispatch({type: "setTower", payloadString: tower});
     };
 
     return (
@@ -45,8 +43,8 @@ const WhereForm:React.FC<WhereFormProps> = ({setTower, setMeetingRoom, setLevel,
                     <NumberInput defaultValue={3}
                                  min={3}
                                  max={27}
-                                 value={level}
-                                 onChange={(valueAsString, valueAsNumber) => setLevel(valueAsNumber)}
+                                 value={formData.level}
+                                 onChange={(valueAsString, valueAsNumber) => formDispatch({type: "setLevel", payloadNumber: valueAsNumber})}
                     >
                         <NumberInputField />
                         <NumberInputStepper>
@@ -59,8 +57,8 @@ const WhereForm:React.FC<WhereFormProps> = ({setTower, setMeetingRoom, setLevel,
                     <NumberInput defaultValue={1}
                                  min={1}
                                  max={10}
-                                 value={meetingRoom}
-                                 onChange={(valueAsString, valueAsNumber) => setMeetingRoom(valueAsNumber)}
+                                 value={formData.meetingRoom}
+                                 onChange={(valueAsString, valueAsNumber) => formDispatch({type: "setMeetingRoom", payloadNumber: valueAsNumber})}
                     >
                         <NumberInputField />
                         <NumberInputStepper>

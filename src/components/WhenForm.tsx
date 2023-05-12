@@ -3,16 +3,14 @@ import '../styles/Form.css';
 import {Flex, FormControl, FormLabel, Input} from "@chakra-ui/react";
 import FormElement from "./FormElement";
 import {useMinMaxDate} from "../hooks/useMinMaxDate";
+import {FormAction, FormState} from "../App";
 
 type WhenFormProps = {
-    setDate:(date: Date) => void;
-    startTime: string | null;
-    setStartTime:(time: string) => void;
-    endTime: string | null;
-    setEndTime:(time: string) => void;
+    formData: FormState,
+    formDispatch: (action: FormAction) => void;
 };
 
-const WhenForm:React.FC<WhenFormProps> = ({setDate, setStartTime, setEndTime, startTime, endTime}) => {
+const WhenForm:React.FC<WhenFormProps> = ({formData, formDispatch}) => {
     const {getMinDateString, getMaxDateString} = useMinMaxDate();
 
     return (
@@ -25,7 +23,7 @@ const WhenForm:React.FC<WhenFormProps> = ({setDate, setStartTime, setEndTime, st
                            type={'date'}
                            min={getMinDateString()}
                            max={getMaxDateString()}
-                           onChange={(event) => setDate(event.target.valueAsDate as Date)}
+                           onChange={(event) => formDispatch({type: "setDate", payloadDate: event.target.valueAsDate as Date})}
                     />
                 </FormElement>
                 <FormElement>
@@ -33,15 +31,15 @@ const WhenForm:React.FC<WhenFormProps> = ({setDate, setStartTime, setEndTime, st
                         <FormControl mr={5}>
                             <FormLabel>Начало</FormLabel>
                             <Input type={'time'}
-                                   value={startTime as string}
-                                   onChange={(event) => setStartTime(event.target.value)}
+                                   value={formData.startTime as string}
+                                   onChange={(event) => formDispatch({type: "setStartTime", payloadString: event.target.value})}
                             />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Завершение</FormLabel>
                             <Input type={'time'}
-                                   value={endTime as string}
-                                   onChange={(event) => setEndTime(event.target.value)}
+                                   value={formData.endTime as string}
+                                   onChange={(event) => formDispatch({type: "setEndTime", payloadString: event.target.value})}
                             />
                         </FormControl>
                     </Flex>
